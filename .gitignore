@@ -1,0 +1,4 @@
+.build/
+Stahovak.app/
+ios/Stahovak.xcodeproj/
+ios/Stahovak/Info.plist
