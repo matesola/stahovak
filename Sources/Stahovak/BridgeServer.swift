@@ -53,7 +53,10 @@ final class BridgeServer: ObservableObject {
             var host = [CChar](repeating: 0, count: Int(NI_MAXHOST))
             getnameinfo(ifa.ifa_addr, socklen_t(ifa.ifa_addr.pointee.sa_len),
                         &host, socklen_t(host.count), nil, 0, NI_NUMERICHOST)
-            addr = String(cString: host)
+            let ip = String(cString: host)
+            // 169.254.x je samopřidělená adresa rozhraní bez sítě (USB, Thunderbolt), iPhone na ni nedosáhne
+            guard !ip.hasPrefix("169.254.") else { continue }
+            addr = ip
             if name == "en0" { break }
         }
         return addr
